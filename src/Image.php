@@ -536,6 +536,13 @@ class Image
 
 		$temporaryFilename = $this->getTemporaryPrefix() . $this->getId();
 
+		$extension = pathinfo(parse_url($this->getLocation(), PHP_URL_PATH) ?: $this->getLocation(), PATHINFO_EXTENSION);
+
+		if (! empty($extension))
+		{
+			$temporaryFilename .= '.' . $extension;
+		}
+
 		$temporaryPath = $temporaryFolder . $temporaryFilename;
 
 		if (file_put_contents($temporaryPath, $content, LOCK_EX) === false)
